@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des fichiers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #0366d6;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des fichiers</h1>
+    <ul id="fileList">
+        <!-- La liste des fichiers sera ajoutée ici par JavaScript -->
+    </ul>
+
+    <script>
+        // Récupérer la liste des fichiers depuis le stockage local de l'extension
+        chrome.storage.local.get("files", function(data) {
+            var fileList = document.getElementById('fileList');
+            if (data.files && data.files.length > 0) {
+                // Parcourir chaque fichier et ajouter un élément de liste pour chaque fichier
+                data.files.forEach(function(file) {
+                    var listItem = document.createElement('li');
+                    var link = document.createElement('a');
+                    link.textContent = file.name;
+                    link.href = file.url;
+                    listItem.appendChild(link);
+                    fileList.appendChild(listItem);
+                });
+            } else {
+                // Afficher un message si aucun fichier n'a été créé
+                var listItem = document.createElement('li');
+                listItem.textContent = 'Aucun fichier n\'a été créé.';
+                fileList.appendChild(listItem);
+            }
+        });
+    </script>
+</body>
+</html>

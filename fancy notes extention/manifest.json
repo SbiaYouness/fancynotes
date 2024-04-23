@@ -1,0 +1,34 @@
+{
+  "name": "FancyNotes",
+  "version": "0.5",
+  "description": "Create notes and save important bullet points from an article",
+  "background": { 
+    "service_worker":"bg.js"
+  },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "images/on.png"
+    },
+
+   "manifest_version": 3,
+   "content_scripts": [
+   {
+      "matches": ["<all_urls>"],
+     "js": ["content.js"],
+     "css": ["content.css"],
+     "run_at": "document_end",
+     "all_frames": true
+   }
+  ],
+   "host_permissions": [
+    "*://*/*",
+    "https://od-api.oxforddictionaries.com/api/*"
+  ],
+
+   "permissions": [
+    "storage",
+    "tabs",
+    "downloads",
+    "activeTab"
+]
+}
